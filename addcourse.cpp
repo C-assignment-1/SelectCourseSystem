@@ -33,7 +33,7 @@ void addcourse::on_btn_sys_addcou_clicked()
                            +"开课学院："+college+"\n"+"上课地点："+place;
     QString info=name+" "+id+" "+nature+" "+point+" "+college+" "+place;
 
-    bool charge=name.length()<1||id.length()<1||place.length()<1;
+    bool charge=name.length()<1||id.length()<1||place.length()<1&id!=0;
 
     if(charge==1)
     {

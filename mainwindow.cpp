@@ -447,3 +447,26 @@ void MainWindow::on_btn_tuichu_clicked()
 {
     this->close();
 }
+
+//QSqlDatabase database;
+//if (QSqlDatabase::contains("qt_sql_default_connection"))
+//{
+//    database = QSqlDatabase::database("qt_sql_default_connection");
+//}
+//else
+//{
+//    database = QSqlDatabase::addDatabase("QSQLITE");
+//    database.setDatabaseName("MyDataBase.db");
+//    database.setUserName("ABC");
+//    database.setPassword("123456");
+//}
+
+//if (!database.open())
+//{
+//    qDebug() << "Error: Failed to connect database." << database.lastError();
+//}
+//else
+//{
+//    //操作数据库
+//}
+//database.close();
