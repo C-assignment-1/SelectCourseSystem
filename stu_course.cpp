@@ -10,7 +10,7 @@
 #include "student.h"
 
 
-float sum;
+int sum;
 
 stu_course::stu_course(QWidget *parent) :
     QDialog(parent),
@@ -29,6 +29,7 @@ stu_course::stu_course(QWidget *parent) :
     this->model1->setHorizontalHeaderItem(3,new QStandardItem("学分"));
     this->model1->setHorizontalHeaderItem(4,new QStandardItem("开课学院"));
     this->model1->setHorizontalHeaderItem(5,new QStandardItem("上课地点"));
+    this->model1->setHorizontalHeaderItem(6,new QStandardItem("教师姓名"));
 
     this->ui->tb_course->setModel(model1);
 
@@ -38,6 +39,7 @@ stu_course::stu_course(QWidget *parent) :
     this->ui->tb_course->setColumnWidth(3,50);
     this->ui->tb_course->setColumnWidth(4,90);
     this->ui->tb_course->setColumnWidth(5,90);
+    this->ui->tb_course->setColumnWidth(6,90);
 
     this->ui->tb_course->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->tb_course->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -50,6 +52,7 @@ stu_course::stu_course(QWidget *parent) :
     this->model2->setHorizontalHeaderItem(3,new QStandardItem("学分"));
     this->model2->setHorizontalHeaderItem(4,new QStandardItem("开课学院"));
     this->model2->setHorizontalHeaderItem(5,new QStandardItem("上课地点"));
+    this->model1->setHorizontalHeaderItem(6,new QStandardItem("教师姓名"));
 
     this->ui->tb_select->setModel(model2);
 
@@ -59,6 +62,7 @@ stu_course::stu_course(QWidget *parent) :
     this->ui->tb_select->setColumnWidth(3,50);
     this->ui->tb_select->setColumnWidth(4,90);
     this->ui->tb_select->setColumnWidth(5,90);
+    this->ui->tb_course->setColumnWidth(6,90);
 
     this->ui->tb_select->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->ui->tb_select->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -102,7 +106,8 @@ stu_course::stu_course(QWidget *parent) :
                 QString credit = sql_query.value(3).toString();
                 QString college = sql_query.value(4).toString();
                 QString address = sql_query.value(5).toString();
-                qDebug()<<name<<id<<property<<credit<<college<<address;
+                QString teacherName = sql_query.value(6).toString();
+                qDebug()<<name<<id<<property<<credit<<college<<address<<teacherName;
                 QStandardItem *item = new QStandardItem(name);
                 model1->setItem(counter,0,item);
                 item = new QStandardItem(id);
@@ -115,6 +120,8 @@ stu_course::stu_course(QWidget *parent) :
                 model1->setItem(counter,4,item);
                 item = new QStandardItem(address);
                 model1->setItem(counter,5,item);
+                item = new QStandardItem(teacherName);
+                model1->setItem(counter,6,item);
                 //id int primary key, name varchar(30), property varchar(30), credit int, college varchar(30), address varchar(30)
                 counter++;
             }
@@ -168,6 +175,7 @@ void stu_course::reset()
     this->model1->setHorizontalHeaderItem(3,new QStandardItem("学分"));
     this->model1->setHorizontalHeaderItem(4,new QStandardItem("开课学院"));
     this->model1->setHorizontalHeaderItem(5,new QStandardItem("上课地点"));
+    this->model1->setHorizontalHeaderItem(6,new QStandardItem("教师姓名"));
 
     this->ui->tb_course->setColumnWidth(0,120);
     this->ui->tb_course->setColumnWidth(1,80);
@@ -175,6 +183,7 @@ void stu_course::reset()
     this->ui->tb_course->setColumnWidth(3,50);
     this->ui->tb_course->setColumnWidth(4,90);
     this->ui->tb_course->setColumnWidth(5,90);
+    this->ui->tb_course->setColumnWidth(6,90);
 }
 
 void stu_course::reset1()
@@ -185,6 +194,7 @@ void stu_course::reset1()
     this->model2->setHorizontalHeaderItem(3,new QStandardItem("学分"));
     this->model2->setHorizontalHeaderItem(4,new QStandardItem("开课学院"));
     this->model2->setHorizontalHeaderItem(5,new QStandardItem("上课地点"));
+    this->model1->setHorizontalHeaderItem(6,new QStandardItem("教师姓名"));
 
     this->ui->tb_select->setColumnWidth(0,120);
     this->ui->tb_select->setColumnWidth(1,80);
@@ -192,6 +202,7 @@ void stu_course::reset1()
     this->ui->tb_select->setColumnWidth(3,50);
     this->ui->tb_select->setColumnWidth(4,90);
     this->ui->tb_select->setColumnWidth(5,90);
+    this->ui->tb_course->setColumnWidth(6,90);
 }
 
 int stu_course::readcoursefile()
@@ -313,6 +324,7 @@ void stu_course::on_btn_stu_doquery_clicked()
                     QString college = sql_query.value(3).toString();
                     QString classnum = sql_query.value(4).toString();
                     QString age = sql_query.value(5).toString();
+                    QString teacherName = sql_query.value(6).toString();
                     QStandardItem *item = new QStandardItem(name);
                     model1->setItem(counter,0,item);
                     item = new QStandardItem(id);
@@ -325,6 +337,8 @@ void stu_course::on_btn_stu_doquery_clicked()
                     model1->setItem(counter,4,item);
                     item = new QStandardItem(age);
                     model1->setItem(counter,5,item);
+                    item = new QStandardItem(teacherName);
+                    model1->setItem(counter,6,item);
                     counter++;
                 }
 
@@ -581,6 +595,7 @@ void stu_course::on_tb_course_doubleClicked(const QModelIndex &index)
 
 void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
 {
+    sum=0;
     int row=this->ui->tb_select->currentIndex().row();
     int id=model2->data(model2->index(row,1)).toInt();
     qDebug()<<id;
@@ -705,15 +720,102 @@ void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
     }
     this->model2->clear();
     reset1();
-    readselectedfile();
-    int r=0;
-    for(int i=0;i<selected_line.length();i++)
+//    readselectedfile();
+//    int r=0;
+//    for(int i=0;i<selected_line.length();i++)
+//    {
+//        QString line=selected_line.at(i);
+//        line=line.trimmed();
+//        QStringList linesplit=line.split(" ");
+//        display1(r++, linesplit);
+//    }
+    qDebug()<<"sum";
+    QSqlDatabase database;
+    if (QSqlDatabase::contains("qt_sql_default_connection"))
     {
-        QString line=selected_line.at(i);
-        line=line.trimmed();
-        QStringList linesplit=line.split(" ");
-        display1(r++, linesplit);
+        database = QSqlDatabase::database("qt_sql_default_connection");
     }
+    else
+    {
+        database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+        database.setDatabaseName("MyDataBase.db");
+        database.setUserName("XingYeZhiXia");
+        database.setPassword("123456");
+    }
+
+    if (!database.open())
+    {
+        qDebug() << "Error: Failed to connect database." << database.lastError();
+    }
+    else
+    {
+        QSqlQuery sql_query;
+        QString select_all_sql = QString("select * from Cstudent where name='%1'").arg(sname);
+        sql_query.prepare(select_all_sql);
+        if(!sql_query.exec())
+        {
+            qDebug()<<sql_query.lastError();
+        }
+        else
+        {
+            int x=6;
+            qDebug()<<sql_query.next();
+//              while(sql_query.next())
+//              {
+            while(x<14)
+            {
+                qDebug()<<"enter1";
+                qDebug()<<sql_query.value(x).toString();
+                int courseId=sql_query.value(x).toInt();
+                if(sql_query.value(x).toInt()==0)
+                {
+                    qDebug()<<"enter2";
+
+                }
+                else
+                {
+                    QSqlDatabase database;
+                    if (QSqlDatabase::contains("qt_sql_default_connection"))
+                    {
+                        database = QSqlDatabase::database("qt_sql_default_connection");
+                    }
+                    else
+                    {
+                        database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+                        database.setDatabaseName("MyDataBase.db");
+                        database.setUserName("XingYeZhiXia");
+                        database.setPassword("123456");
+                    }
+
+                    if (!database.open())
+                    {
+                        qDebug() << "Error: Failed to connect database." << database.lastError();
+                    }
+                    else
+                    {
+                        QSqlQuery sql_query;
+                        QString select_all_sql = QString("select * from Acourse where courseId='%1' ").arg(courseId);
+                        //courseId int primary key, courseName varchar(30), property varchar(30), credit int
+                        sql_query.prepare(select_all_sql);
+                        if(!sql_query.exec())
+                        {
+                            qDebug()<<sql_query.lastError();
+                        }
+                        else
+                        {
+                            int credit=sql_query.value(3).toInt();
+                            sum=sum+credit;
+                        }
+                        database.close();
+                    }
+                x++;
+                }
+//              }
+            }
+        }
+
+    }
+    database.close();
     this->ui->le_sum->setText(QString("%1").arg(sum));
 }
 
@@ -758,6 +860,7 @@ void stu_course::on_pushButton_clicked()
                 QString college = sql_query.value(3).toString();
                 QString classnum = sql_query.value(4).toString();
                 QString age = sql_query.value(5).toString();
+                QString teacherName = sql_query.value(6).toString();
                 QStandardItem *item = new QStandardItem(name);
                 model1->setItem(counter,0,item);
                 item = new QStandardItem(id);
@@ -770,6 +873,8 @@ void stu_course::on_pushButton_clicked()
                 model1->setItem(counter,4,item);
                 item = new QStandardItem(age);
                 model1->setItem(counter,5,item);
+                item = new QStandardItem(teacherName);
+                model1->setItem(counter,6,item);
                 counter++;
             }
 
@@ -792,6 +897,7 @@ void stu_course::on_pushButton_clicked()
 //        display(r++, linesplit);
 //    }
 }
+
 
 void stu_course::setSname(QString name)
 {
@@ -820,6 +926,7 @@ QString stu_course::getSname()
 
 void stu_course::on_pushButton_2_clicked()
 {
+    sum=0;
     this->model2->clear();
     reset1();
     QSqlDatabase database;
@@ -911,6 +1018,7 @@ void stu_course::on_pushButton_2_clicked()
                                 QString credit = sql_query.value(3).toString();
                                 QString college = sql_query.value(4).toString();
                                 QString address = sql_query.value(5).toString();
+                                QString teacherName = sql_query.value(6).toString();
                                 qDebug()<<name<<id<<property<<credit<<college<<address;
                                 QStandardItem *item = new QStandardItem(name);
                                 model2->setItem(counter,0,item);
@@ -924,9 +1032,14 @@ void stu_course::on_pushButton_2_clicked()
                                 model2->setItem(counter,4,item);
                                 item = new QStandardItem(address);
                                 model2->setItem(counter,5,item);
-
+                                item = new QStandardItem(teacherName);
+                                model2->setItem(counter,6,item);
                                 //id int primary key, name varchar(30), property varchar(30), credit int, college varchar(30), address varchar(30)
                                 counter++;
+
+                                int point = sql_query.value(3).toInt();
+                                qDebug()<<point;
+                                sum=sum+point;
                             }
                         }
 
@@ -944,5 +1057,184 @@ void stu_course::on_pushButton_2_clicked()
         }
     }
 
-database.close();
+    database.close();
+
+//    qDebug()<<"sum";
+
+//    if (QSqlDatabase::contains("qt_sql_default_connection"))
+//    {
+//        database = QSqlDatabase::database("qt_sql_default_connection");
+//    }
+//    else
+//    {
+//        database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+//        database.setDatabaseName("MyDataBase.db");
+//        database.setUserName("XingYeZhiXia");
+//        database.setPassword("123456");
+//    }
+
+//    if (!database.open())
+//    {
+//        qDebug() << "Error: Failed to connect database." << database.lastError();
+//    }
+//    else
+//    {
+//        QSqlQuery sql_query;
+//        QString select_all_sql = QString("select * from Cstudent where name='%1'").arg(sname);
+//        sql_query.prepare(select_all_sql);
+//        if(!sql_query.exec())
+//        {
+//            qDebug()<<sql_query.lastError();
+//        }
+//        else
+//        {
+//            int x=6;
+//            qDebug()<<sql_query.next();
+////              while(sql_query.next())
+////              {
+//            while(x<14)
+//            {
+//                qDebug()<<"enter1";
+//                qDebug()<<sql_query.value(x).toString();
+//                int courseId=sql_query.value(x).toInt();
+//                if(sql_query.value(x).toInt()==0)
+//                {
+//                    qDebug()<<"enter2";
+
+//                }
+//                else
+//                {
+//                    QSqlDatabase database;
+//                    if (QSqlDatabase::contains("qt_sql_default_connection"))
+//                    {
+//                        database = QSqlDatabase::database("qt_sql_default_connection");
+//                    }
+//                    else
+//                    {
+//                        database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+//                        database.setDatabaseName("MyDataBase.db");
+//                        database.setUserName("XingYeZhiXia");
+//                        database.setPassword("123456");
+//                    }
+
+//                    if (!database.open())
+//                    {
+//                        qDebug() << "Error: Failed to connect database." << database.lastError();
+//                    }
+//                    else
+//                    {
+//                        QSqlQuery sql_query;
+//                        QString select_all_sql = QString("select * from Acourse where courseId='%1'").arg(courseId);
+//                        //courseId int primary key, courseName varchar(30), property varchar(30), credit int
+//                        //QString("select * from Acourse where courseId=%1").arg(courseId);
+//                        sql_query.prepare(select_all_sql);
+//                        if(!sql_query.exec())
+//                        {
+//                            qDebug()<<sql_query.lastError();
+//                        }
+//                        else
+//                        {
+//                            qDebug()<<"not positioned hhhhhhhh"<<sql_query.value(2).toString();
+//                            int credit=sql_query.value(3).toInt();
+//                            //QString credit = sql_query.value(3).toString();
+//                            sum=sum+credit;
+//                        }
+//                        database.close();
+//                    }
+
+//                }
+////              }
+//                x++;
+//            }
+//        }
+
+//    }
+//    database.close();
+    this->ui->le_sum->setText(QString("%1").arg(sum));
 }
+
+//算科目总分
+//QSqlDatabase database;
+//if (QSqlDatabase::contains("qt_sql_default_connection"))
+//{
+//    database = QSqlDatabase::database("qt_sql_default_connection");
+//}
+//else
+//{
+//    database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+//    database.setDatabaseName("MyDataBase.db");
+//    database.setUserName("XingYeZhiXia");
+//    database.setPassword("123456");
+//}
+
+//if (!database.open())
+//{
+//    qDebug() << "Error: Failed to connect database." << database.lastError();
+//}
+//else
+//{
+//    QSqlQuery sql_query;
+//    QString select_all_sql = QString("select * from Cstudent where name='%1'").arg(sname);
+//    sql_query.prepare(select_all_sql);
+//    if(!sql_query.exec())
+//    {
+//        qDebug()<<sql_query.lastError();
+//    }
+//    else
+//    {
+//        int x=6;
+//          qDebug()<<sql_query.next();
+//              while(sql_query.next())
+//              {
+//            while(x<14)
+//            {
+//                qDebug()<<"enter1";
+//                qDebug()<<sql_query.value(x).toString();
+//                int courseId=sql_query.value(x).toInt();
+//                if(sql_query.value(x).toInt()==0)
+//                {
+//                    qDebug()<<"enter2";
+
+//                }
+//                else
+//                {
+//                    QSqlDatabase database;
+//                    if (QSqlDatabase::contains("qt_sql_default_connection"))
+//                    {
+//                        database = QSqlDatabase::database("qt_sql_default_connection");
+//                    }
+//                    else
+//                    {
+//                        database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+//                        database.setDatabaseName("MyDataBase.db");
+//                        database.setUserName("XingYeZhiXia");
+//                        database.setPassword("123456");
+//                    }
+
+//                    if (!database.open())
+//                    {
+//                        qDebug() << "Error: Failed to connect database." << database.lastError();
+//                    }
+//                    else
+//                    {
+//                        QSqlQuery sql_query;
+//                        QString select_all_sql = QString("select * from Ascore where studentName='%1' and courseId='%2' ").arg(sname).arg(courseId);
+//                        //studentName varchar(30) primary key, teacherName varchar(30), score int, courseId int
+//                        sql_query.prepare(select_all_sql);
+//                        if(!sql_query.exec())
+//                        {
+//                            qDebug()<<sql_query.lastError();
+//                        }
+//                        else
+//                        {
+//                            int score=sql_query.value(2).toInt();
+//                            sum=sum+score;
+//                        }
+//                        database.close();
+//                }
+//                x++;
+//            }
+//             }
+//    }
+//}
+//database.close();

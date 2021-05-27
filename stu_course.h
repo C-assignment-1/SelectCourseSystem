@@ -5,7 +5,7 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 
-extern float sum;
+extern int sum;
 
 namespace Ui {
 class stu_course;

@@ -29,11 +29,54 @@ void addcourse::on_btn_sys_addcou_clicked()
     QString point=this->ui->cbb_point->currentText();
     QString college=this->ui->cbb_college->currentText();
     QString place=this->ui->le_course_place->text();
+    QString teacherName = ui->le_teacher_name->text();
     QString messagebox_out="课程名称："+name+"\n"+"课程编号："+id+"\n"+"课程性质："+nature+"\n"+"课程学分："+point+"\n"
                            +"开课学院："+college+"\n"+"上课地点："+place;
     QString info=name+" "+id+" "+nature+" "+point+" "+college+" "+place;
 
     bool charge=name.length()<1||id.length()<1||place.length()<1&id!=0;
+
+    QSqlDatabase database;
+    if (QSqlDatabase::contains("qt_sql_default_connection"))
+    {
+        database = QSqlDatabase::database("qt_sql_default_connection");
+    }
+    else
+    {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        database.setDatabaseName("MyDataBase.db");
+        database.setUserName("XingYeZhiXia");
+        database.setPassword("123456");
+    }
+
+    if (!database.open())
+    {
+        qDebug() << "Error: Failed to connect database." << database.lastError();
+    }
+    else
+    {
+        QSqlQuery sql_query;
+        QString select_all_sql = QString("select * from Cteacher where name='%1'").arg(teacherName);
+
+        sql_query.prepare(select_all_sql);
+        if(!sql_query.exec())
+        {
+            qDebug()<<sql_query.lastError();
+        }
+        else
+        {
+
+            if(sql_query.next())
+            {
+
+            }
+            else
+            {
+                QMessageBox::critical(this,"错误","请填写系统内已录入信息的老师","确定");
+            }
+        }
+    }
+    database.close();
 
     if(charge==1)
     {
@@ -67,7 +110,7 @@ void addcourse::on_btn_sys_addcou_clicked()
                //操控数据库
                //创建表
                QSqlQuery sql_query;
-               QString insert_sql = "insert into Acourse values (?, ?, ?, ?, ?, ?)";
+               QString insert_sql = "insert into Acourse values (?, ?, ?, ?, ?, ?, ?)";
                sql_query.prepare(insert_sql);
                QString name = ui->le_course_name->text();
                int id = ui->le_course_id->text().toInt();
@@ -75,6 +118,7 @@ void addcourse::on_btn_sys_addcou_clicked()
                int credit =this->ui->cbb_point->currentText().toInt();
                QString college=this->ui->cbb_college->currentText();
                QString address=this->ui->le_course_place->text();
+               QString teacherName = ui->le_teacher_name->text();
                qDebug()<<name<<id<<property<<credit<<college<<address;
                sql_query.addBindValue(id);
                sql_query.addBindValue(name);
@@ -82,6 +126,7 @@ void addcourse::on_btn_sys_addcou_clicked()
                sql_query.addBindValue(credit);
                sql_query.addBindValue(college);
                sql_query.addBindValue(address);
+               sql_query.addBindValue(teacherName);
                //id int primary key, name varchar(30), property varchar(30), credit int, college varchar(30), address
                //n,i,n,c,c,a
                if(!sql_query.exec())

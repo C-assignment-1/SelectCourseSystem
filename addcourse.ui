@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>394</height>
+    <width>428</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>20</y>
-     <width>131</width>
+     <x>130</x>
+     <y>10</y>
+     <width>151</width>
      <height>31</height>
     </rect>
    </property>
@@ -35,7 +35,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>70</y>
+     <y>50</y>
      <width>201</width>
      <height>23</height>
     </rect>
@@ -64,7 +64,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>260</y>
+     <y>240</y>
      <width>203</width>
      <height>23</height>
     </rect>
@@ -118,7 +118,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>210</y>
+     <y>190</y>
      <width>137</width>
      <height>23</height>
     </rect>
@@ -165,8 +165,8 @@
   <widget class="QPushButton" name="btn_sys_addcou">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>350</y>
+     <x>210</x>
+     <y>380</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -178,8 +178,8 @@
   <widget class="QPushButton" name="btn_sys_addcoucancel">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>350</y>
+     <x>310</x>
+     <y>380</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -192,7 +192,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>160</y>
+     <y>140</y>
      <width>188</width>
      <height>23</height>
     </rect>
@@ -230,7 +230,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>310</y>
+     <y>290</y>
      <width>201</width>
      <height>23</height>
     </rect>
@@ -259,7 +259,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>110</y>
+     <y>90</y>
      <width>201</width>
      <height>23</height>
     </rect>
@@ -279,6 +279,35 @@
       </property>
       <property name="placeholderText">
        <string>请输入4位课程编号</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>254</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>教师姓名</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="le_teacher_name">
+      <property name="placeholderText">
+       <string/>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>

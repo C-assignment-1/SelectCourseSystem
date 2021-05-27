@@ -65,7 +65,10 @@ MainWindow::MainWindow(QWidget *parent) :
         QString create_student_sql = "create table Cstudent (id int primary key, name varchar(30), password int, college varchar(30), classnum int, age int, courseIdOne int, courseIdTwo int, courseIdThree int, courseIdFour int, courseIdFive int, courseIdSix int, courseIdSeven int, courseIdEight int)";
         QString create_teacher_sql = "create table Cteacher (id int primary key, name varchar(30), password int, college varchar(30), gender int, age int, courseIdOne int, courseIdTwo int, courseIdThree int, courseIdFour int, courseIdFive int, courseIdSix int, courseIdSeven int, courseIdEight int)";
         //QString create_controller_sql = "create table contorller (id int primary key, name varchar(30), password int, college varchar(30), classnum int, age int)";
-        QString create_course_sql = "create table Acourse (courseId int primary key, courseName varchar(30), property varchar(30), credit int, college varchar(30), address varchar(30))";
+        QString create_course_sql = "create table Acourse (courseId int primary key, courseName varchar(30), property varchar(30), credit int, college varchar(30), address varchar(30), teacherName varchar(30))";
+       // QString create_score_sql = "create table Ascore (studentName varchar(30) primary key, teacherName varchar(30), score int, courseId int)";
+        //name,id,classnum,subject_scores
+        //获取学生选取的科目信息，tableview，双击，进入录入学生的成绩
         //QString connect_table_sql="select students.courseId,teacher.courseId, from course inner join students on course.courseId = students.courseId inner join teacher  on course.courseId =teacher.courseId";
 
 //        if(sql_query.exec("ALTER TABLE  students ADD COLUMN address varchar(30)"))   //向 students表里添加新的一列,标题为classId,内容格式为VARCHAR
@@ -117,6 +120,16 @@ MainWindow::MainWindow(QWidget *parent) :
         {
             qDebug() << "Table created!";
         }
+//        sql_query.prepare(create_score_sql);
+//        if(!sql_query.exec())
+//        {
+//            qDebug() << "Error: Fail to create score table." << sql_query.lastError();
+//        }
+//        else
+//        {
+//            qDebug() << "Table created!";
+//        }
+
 //        sql_query.prepare(connect_table_sql);
 //        if(!sql_query.exec())
 //        {
