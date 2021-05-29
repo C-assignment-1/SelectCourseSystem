@@ -25,6 +25,13 @@ addstu::~addstu()
 
 void addstu::on_btn_sys_addstu_clicked()
 {
+    QString name = ui->le_stu_name->text();
+    int id = ui->le_stu_id->text().toInt();
+    int password=this->ui->le_stu_password->text().toInt();
+    QString college=this->ui->cbb_stu->currentText();
+    QString classnum=this->ui->le_stu_class->text();
+    QString age=this->ui->le_stu_age->text();
+
     QSqlDatabase database;
     if (QSqlDatabase::contains("qt_sql_default_connection"))
     {
@@ -73,12 +80,7 @@ void addstu::on_btn_sys_addstu_clicked()
     //                    cout<<buf_OUT[i];
     //                }
 
-        QString name = ui->le_stu_name->text();
-        int id = ui->le_stu_id->text().toInt();
-        int password=this->ui->le_stu_password->text().toInt();
-        QString college=this->ui->cbb_stu->currentText();
-        QString classnum=this->ui->le_stu_class->text();
-        QString age=this->ui->le_stu_age->text();
+
         //    QString name=this->ui->le_stu_name->text();
         //    QString id=this->ui->le_stu_id->text();
         //    QString password=this->ui->le_stu_password->text();

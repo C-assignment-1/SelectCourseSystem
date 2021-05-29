@@ -15,23 +15,23 @@ sysdel::sysdel(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    if(readstudentfile()==-1)
-    {
-        this->close();
-        QMessageBox::critical(this,"错误","文件读取失败!","确认");
-    }
+//    if(readstudentfile()==-1)
+//    {
+//        this->close();
+//        QMessageBox::critical(this,"错误","文件读取失败!","确认");
+//    }
 
-    if(readteacherfile()==-1)
-    {
-        this->close();
-        QMessageBox::critical(this,"错误","文件读取失败!","确认");
-    }
+//    if(readteacherfile()==-1)
+//    {
+//        this->close();
+//        QMessageBox::critical(this,"错误","文件读取失败!","确认");
+//    }
 
-    if(readcoursefile()==-1)
-    {
-        this->close();
-        QMessageBox::critical(this,"错误","文件读取失败!","确认");
-    }
+//    if(readcoursefile()==-1)
+//    {
+//        this->close();
+//        QMessageBox::critical(this,"错误","文件读取失败!","确认");
+//    }
 }
 
 sysdel::~sysdel()
@@ -101,7 +101,7 @@ void sysdel::deletestudent()
     {
     case 0: type="Cstudent";break;
     case 1: type="Cteacher";break;
-    case 2: type="Acourse";break;
+    case 2: type="Bcourse";break;
     default: qDebug()<<"error";
     }
 
@@ -244,18 +244,68 @@ void sysdel::deletecourse()
 
 void sysdel::on_btn_del_clicked()
 {
-    QString id=ui->le_id->text();
+    int id=ui->le_id->text().toInt();
     QString type="unknown";
-    int typeID=-1;
-    typeID=ui->comboBox->currentIndex();
+    QString colName="id";
+    int typeIndex=-1;
+    typeIndex=ui->comboBox->currentIndex();
 
-    switch(typeID)
+    switch(typeIndex)
     {
-    case 0: deletestudent();break;
-    case 1: type="teacher";break;
-    case 2: type="course";break;
+    case 0: type="Cstudent";break;
+    case 1: type="Cteacher";break;
+    case 2: type="Bcourse";colName="courseId";break;
     default: qDebug()<<"error";
     }
+
+    qDebug()<<type;
+    QSqlDatabase database;
+    if (QSqlDatabase::contains("qt_sql_default_connection"))
+    {
+        database = QSqlDatabase::database("qt_sql_default_connection");
+    }
+    else
+    {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        database.setDatabaseName("MyDataBase.db");
+        database.setUserName("XingYeZhiXia");
+        database.setPassword("123456");
+    }
+
+    if (!database.open())
+    {
+        qDebug() << "Error: Failed to connect database." << database.lastError();
+    }
+    else
+    {
+        // do something
+        //操控数据库
+        QSqlQuery sql_query;
+        QString delete_sql = QString("delete from %1 where %3 = '%2'").arg(type).arg(colName).arg(id);
+        sql_query.prepare(delete_sql);
+        if(!sql_query.exec())
+        {
+            qDebug()<<sql_query.lastError();
+        }
+        else
+        {
+            qDebug()<<"deleted!";
+        }
+    }
+    database.close();
+//    QString id=ui->le_id->text();
+//    QString type="unknown";
+//    int typeID=-1;
+//    typeID=ui->comboBox->currentIndex();
+
+//    switch(typeID)
+//    {
+//    case 0: deletestudent();break;
+//    case 1: type="teacher";break;
+//    case 2: type="course";break;
+//    default: qDebug()<<"error";
+//    }
+
 //    ID=this->ui->le_id->text();
 //    int flag=100;
 //    if(ID.at(0)=="s"&&ID.length()==9)

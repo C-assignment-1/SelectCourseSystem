@@ -14,6 +14,8 @@ class teacher : public QDialog
 public:
     explicit teacher(QWidget *parent = nullptr);
     ~teacher();
+    void setSname(QString);
+    QString getSname();
 
 private slots:
     void on_btn_close_clicked();
@@ -28,6 +30,7 @@ private slots:
 
 private:
     Ui::teacher *ui;
+    QString sname;
 };
 
 #endif // TEACHER_H

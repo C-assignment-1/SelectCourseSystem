@@ -87,25 +87,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>学号：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="le_addscore_id">
-        <property name="maxLength">
-         <number>9</number>
-        </property>
-        <property name="placeholderText">
-         <string>请输入9位学号</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QHBoxLayout" name="horizontalLayout_3"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -129,13 +111,12 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_4"/>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>数学：</string>
-        </property>
-       </widget>
+       <widget class="QComboBox" name="comboBox"/>
       </item>
       <item>
        <widget class="QLineEdit" name="le_addscore_math">
@@ -147,40 +128,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>英语：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="le_addscore_eng">
-        <property name="maxLength">
-         <number>2</number>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>物理：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="le_addscore_phy">
-        <property name="maxLength">
-         <number>2</number>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QHBoxLayout" name="horizontalLayout_6"/>
     </item>
    </layout>
   </widget>

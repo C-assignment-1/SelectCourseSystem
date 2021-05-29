@@ -15,8 +15,11 @@ class tea_scoreimport : public QDialog
 
 public:
     explicit tea_scoreimport(QWidget *parent = nullptr);
+    tea_scoreimport(QWidget *parent,QString);
     void display(int row,QStringList subs);
     ~tea_scoreimport();
+    void setSname(QString);
+    QString getSname();
 
 private slots:
     void reset();
@@ -31,6 +34,7 @@ private:
     Ui::tea_scoreimport *ui;
     QStandardItemModel *model;
     QList<QString> score_line;
+    QString sname;
 };
 
 #endif // TEA_SCOREIMPORT_H

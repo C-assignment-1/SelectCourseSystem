@@ -36,47 +36,47 @@ void addcourse::on_btn_sys_addcou_clicked()
 
     bool charge=name.length()<1||id.length()<1||place.length()<1&id!=0;
 
-    QSqlDatabase database;
-    if (QSqlDatabase::contains("qt_sql_default_connection"))
-    {
-        database = QSqlDatabase::database("qt_sql_default_connection");
-    }
-    else
-    {
-        database = QSqlDatabase::addDatabase("QSQLITE");
-        database.setDatabaseName("MyDataBase.db");
-        database.setUserName("XingYeZhiXia");
-        database.setPassword("123456");
-    }
+//    QSqlDatabase database;
+//    if (QSqlDatabase::contains("qt_sql_default_connection"))
+//    {
+//        database = QSqlDatabase::database("qt_sql_default_connection");
+//    }
+//    else
+//    {
+//        database = QSqlDatabase::addDatabase("QSQLITE");
+//        database.setDatabaseName("MyDataBase.db");
+//        database.setUserName("XingYeZhiXia");
+//        database.setPassword("123456");
+//    }
 
-    if (!database.open())
-    {
-        qDebug() << "Error: Failed to connect database." << database.lastError();
-    }
-    else
-    {
-        QSqlQuery sql_query;
-        QString select_all_sql = QString("select * from Cteacher where name='%1'").arg(teacherName);
+//    if (!database.open())
+//    {
+//        qDebug() << "Error: Failed to connect database." << database.lastError();
+//    }
+//    else
+//    {
+//        QSqlQuery sql_query;
+//        QString select_all_sql = QString("select * from Cteacher where name='%1'").arg(teacherName);
 
-        sql_query.prepare(select_all_sql);
-        if(!sql_query.exec())
-        {
-            qDebug()<<sql_query.lastError();
-        }
-        else
-        {
+//        sql_query.prepare(select_all_sql);
+//        if(!sql_query.exec())
+//        {
+//            qDebug()<<sql_query.lastError();
+//        }
+//        else
+//        {
 
-            if(sql_query.next())
-            {
+//            if(sql_query.next())
+//            {
 
-            }
-            else
-            {
-                QMessageBox::critical(this,"错误","请填写系统内已录入信息的老师","确定");
-            }
-        }
-    }
-    database.close();
+//            }
+//            else
+//            {
+//                QMessageBox::critical(this,"错误","请填写系统内已录入信息的老师","确定");
+//            }
+//        }
+//    }
+//    database.close();
 
     if(charge==1)
     {
@@ -110,7 +110,7 @@ void addcourse::on_btn_sys_addcou_clicked()
                //操控数据库
                //创建表
                QSqlQuery sql_query;
-               QString insert_sql = "insert into Acourse values (?, ?, ?, ?, ?, ?, ?)";
+               QString insert_sql = "insert into Bcourse values (?, ?, ?, ?, ?, ?, ?)";
                sql_query.prepare(insert_sql);
                QString name = ui->le_course_name->text();
                int id = ui->le_course_id->text().toInt();
@@ -139,6 +139,93 @@ void addcourse::on_btn_sys_addcou_clicked()
                }
             }
 
+           database.close();
+
+
+           QString type="unknow";
+           int counter=0;
+           if (QSqlDatabase::contains("qt_sql_default_connection"))
+           {
+               database = QSqlDatabase::database("qt_sql_default_connection");
+           }
+           else
+           {
+               database = QSqlDatabase::addDatabase("QSQLITE");//如果需要使用自定义的名称则要添加第二个参数database = QSqlDatabase::addDatabase("QSQLITE", "my_sql_connection");
+               database.setDatabaseName("MyDataBase.db");
+               database.setUserName("XingYeZhiXia");
+               database.setPassword("123456");
+           }
+
+           if (!database.open())
+           {
+               qDebug() << "Error: Failed to connect database." << database.lastError();
+           }
+           else
+           {
+               QSqlQuery sql_query;
+               QString select_all_sql = QString("select * from Cteacher where name='%1'").arg(teacherName);
+               sql_query.prepare(select_all_sql);
+               if(!sql_query.exec())
+               {
+                   qDebug()<<sql_query.lastError();
+               }
+               else
+               {
+                 int x=6;
+                 qDebug()<<sql_query.next();
+                 qDebug()<<sql_query.value(6).toString()<<sql_query.value(7).toString()<<sql_query.value(8).toString()<<sql_query.value(9).toString();
+   //              while(sql_query.next())
+   //              {//没进来
+                     qDebug()<<"enter";
+                     while(x<14)
+                     {
+                         qDebug()<<sql_query.value(8).toString();
+                         if(sql_query.value(x).toInt()==0)
+                         {
+                             qDebug()<<"yes";
+                             counter=x;
+                             break;
+                         }
+                         x++;
+                     }
+   //              }
+               }
+               counter=counter-5;
+               qDebug()<<counter;
+
+               switch(counter)
+               {
+                   case 1: type="courseIdOne";break;
+                   case 2: type="courseIdTwo";break;
+                   case 3: type="courseIdThree";break;
+                   case 4: type="courseIdFour";break;
+                   case 5: type="courseIdFive";break;
+                   case 6: type="courseIdSix";break;
+                   case 7: type="courseIdSeven";break;
+                   case 8: type="courseIdEight";break;
+                   default:qDebug()<<"conunter errors";
+               }
+               qDebug()<<type;
+
+               QString insert_sql = QString("update Cteacher  set %1 = ?").arg(type);
+               //QString update_sql = QString("UPDATE  Cstudent  SET %1 = ?").arg(type);
+               sql_query.prepare(insert_sql);
+               int id = ui->le_course_id->text().toInt();
+               sql_query.addBindValue(id);
+
+               //query.exec("UPDATE  new_students  SET score = 100 , name = '小A'");
+               //QString("insert into Cstudent (%1) values (?)").arg(type);
+               //修改score和name所在的列内容
+               if(!sql_query.exec())
+               {
+                   qDebug() << sql_query.lastError();
+               }
+               else
+               {
+                   qDebug() << "update successfully!";
+               }
+
+           }
            database.close();
           }
     }

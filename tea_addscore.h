@@ -13,8 +13,11 @@ class tea_addscore : public QDialog
 
 public:
     explicit tea_addscore(QWidget *parent = nullptr);
+    tea_addscore(QWidget *parent,QString);
     ~tea_addscore();
     void writeIn(QString information);
+    void setSname(QString);
+    QString getSname();
 
 private slots:
     void on_btn_addscore_add_clicked();
@@ -23,6 +26,7 @@ private slots:
 
 private:
     Ui::tea_addscore *ui;
+    QString sname;
 };
 
 #endif // TEA_ADDSCORE_H

@@ -22,9 +22,12 @@ class tea_querystu : public QDialog
 
 public:
     explicit tea_querystu(QWidget *parent = nullptr);
+    tea_querystu(QWidget *parent,QString);
     int readfile();
     void reset();
     void display(int row, QStringList score_line);
+    void setSname(QString);
+    QString getSname();
 
     ~tea_querystu();
 
@@ -37,6 +40,7 @@ public:
     Ui::tea_querystu *ui;
     QStandardItemModel *model;
     QList<QString> score_line;
+    QString sname;
 };
 
 #endif // TEA_QUERYSTU_H

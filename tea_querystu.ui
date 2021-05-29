@@ -47,33 +47,15 @@
      <x>80</x>
      <y>90</y>
      <width>451</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5,1">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,5,1">
     <item>
-     <widget class="QComboBox" name="cbb_querymode">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>学生姓名</string>
       </property>
-      <item>
-       <property name="text">
-        <string>按姓名查询</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按学号查询</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按班级查询</string>
-       </property>
-      </item>
      </widget>
     </item>
     <item>

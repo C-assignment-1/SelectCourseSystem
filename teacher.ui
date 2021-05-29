@@ -37,14 +37,14 @@
      <x>90</x>
      <y>190</y>
      <width>211</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QPushButton" name="btn_tea_querystu">
       <property name="text">
-       <string>查询学生</string>
+       <string>查询学生成绩</string>
       </property>
      </widget>
     </item>
@@ -76,7 +76,7 @@
      <x>90</x>
      <y>120</y>
      <width>211</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -109,7 +109,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>成绩导入</string>
+       <string>成绩分析</string>
       </property>
      </widget>
     </item>

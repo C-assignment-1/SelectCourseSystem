@@ -32,7 +32,7 @@ void addtea::on_btn_sys_addtea_clicked()
                            "性别："+sex+"\n"+"年龄："+age+"\n"+"院系："+college;
     QString info=name+" "+id+" "+password+" "+sex+" "+age+" "+college;
 
-    bool charge=name.length()<1||id.length()<9||password.length()<6||id.at(0)!="t";
+    bool charge=name.length()<1||id.length()<9||password.length()<6;
 
     if(charge==1)
     {

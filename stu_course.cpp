@@ -89,7 +89,7 @@ stu_course::stu_course(QWidget *parent) :
         // do something
         //操控数据库
         QSqlQuery sql_query;
-        QString select_all_sql = "select * from Acourse";
+        QString select_all_sql = "select * from Bcourse";
         sql_query.prepare(select_all_sql);
         if(!sql_query.exec())
         {
@@ -306,7 +306,7 @@ void stu_course::on_btn_stu_doquery_clicked()
             default:break;
             }
             QSqlQuery sql_query;
-            QString select_all_sql=QString("select * from Acourse where %1='%2'").arg(type).arg(cname);
+            QString select_all_sql=QString("select * from Bcourse where %1='%2'").arg(type).arg(cname);
             sql_query.prepare(select_all_sql);
             if(!sql_query.exec())
             {//courseId int primary key, courseName varchar(30), property varchar(30), credit int, college varchar(30), address varchar(30)
@@ -528,7 +528,7 @@ void stu_course::on_tb_course_doubleClicked(const QModelIndex &index)
                   while(x<14)
                   {
                       qDebug()<<sql_query.value(8).toString();
-                      if(sql_query.value(x).toString()=="")
+                      if(sql_query.value(x).toInt()==0)
                       {
                           qDebug()<<"yes";
                           counter=x;
@@ -668,7 +668,7 @@ void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
             qDebug()<<type;
 
             QString update_sql = QString("UPDATE  Cstudent  SET %1 = 0").arg(type);
-            qDebug()<<QString("UPDATE  Cstudent  SET %1 = ?").arg(type);
+            qDebug()<<QString("UPDATE  Cstudent  SET %1 = 0").arg(type);
             sql_query.prepare(update_sql);
             //"insert into Cstudent (id, name, password, college, classnum, age) values (?, ?, ?, ?, ?, ?)"
 
@@ -729,6 +729,7 @@ void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
 //        QStringList linesplit=line.split(" ");
 //        display1(r++, linesplit);
 //    }
+    //计算学分总分
     qDebug()<<"sum";
     QSqlDatabase database;
     if (QSqlDatabase::contains("qt_sql_default_connection"))
@@ -770,7 +771,7 @@ void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
                 if(sql_query.value(x).toInt()==0)
                 {
                     qDebug()<<"enter2";
-
+                    x++;
                 }
                 else
                 {
@@ -794,7 +795,7 @@ void stu_course::on_tb_select_doubleClicked(const QModelIndex &index)
                     else
                     {
                         QSqlQuery sql_query;
-                        QString select_all_sql = QString("select * from Acourse where courseId='%1' ").arg(courseId);
+                        QString select_all_sql = QString("select * from Bcourse where courseId='%1' ").arg(courseId);
                         //courseId int primary key, courseName varchar(30), property varchar(30), credit int
                         sql_query.prepare(select_all_sql);
                         if(!sql_query.exec())
@@ -843,7 +844,7 @@ void stu_course::on_pushButton_clicked()
         // do something
         //操控数据库
         QSqlQuery sql_query;
-        QString select_all_sql = "select * from Acourse";
+        QString select_all_sql = "select * from Bcourse";
         sql_query.prepare(select_all_sql);
         if(!sql_query.exec())
         {
@@ -999,8 +1000,8 @@ void stu_course::on_pushButton_2_clicked()
 
 
                         QSqlQuery sql_query;
-                        QString select_all_sql = QString("select * from Acourse where courseId=%1").arg(courseId);
-                        //QString select_all_sql=QString("select * from Acourse where %1='%2'").arg(type).arg(cname);
+                        QString select_all_sql = QString("select * from Bcourse where courseId=%1").arg(courseId);
+                        //QString select_all_sql=QString("select * from Bcourse where %1='%2'").arg(type).arg(cname);
                         qDebug()<<QString("select * from Acourse where id='%1'").arg(courseId);
                         sql_query.prepare(select_all_sql);
                         if(!sql_query.exec())
@@ -1011,7 +1012,7 @@ void stu_course::on_pushButton_2_clicked()
                         {
                               qDebug()<<"select information";
                             while(sql_query.next())
-                            {   qDebug()<<"start select infromation of course";
+                            {   qDebug()<<"start select information of course";
                                 QString id = sql_query.value(0).toString();
                                 QString name = sql_query.value(1).toString();
                                 QString property = sql_query.value(2).toString();

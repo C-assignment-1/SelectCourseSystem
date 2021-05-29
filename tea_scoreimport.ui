@@ -18,7 +18,7 @@
     <rect>
      <x>330</x>
      <y>40</y>
-     <width>101</width>
+     <width>121</width>
      <height>31</height>
     </rect>
    </property>
@@ -50,7 +50,7 @@
      <x>21</x>
      <y>100</y>
      <width>711</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -69,36 +69,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <item>
-       <property name="text">
-        <string>按总分排序</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按数学排序</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按英语排序</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按物理排序</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按学号排序</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>按班号排序</string>
-       </property>
-      </item>
      </widget>
     </item>
     <item>
